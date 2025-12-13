@@ -156,7 +156,7 @@ mysql> insert into accounts values (11110,'pooja','female','current',200000),
 
 
 
-Conclusion
+# Conclusion
 
 
 The Banking Management System demonstrates fundamental banking operations using MySQL, providing a practical approach to managing customers, accounts, and transactions. It emphasizes database design, relational integrity, and the use of stored procedures for automation. While it is suitable for learning and small-scale simulations, it highlights the importance of accuracy, transparency, and structured data management in real-world banking. This project serves as a solid foundation for building more advanced banking applications with enhanced security, scalability, and user interfaces.
