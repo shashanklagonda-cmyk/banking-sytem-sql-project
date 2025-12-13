@@ -4,7 +4,7 @@ The Banking Management System is a simple SQL-based project developed to simulat
 
 
 
-Key Objectives
+# Key Objectives
 ##Customer Management: Efficiently store and manage customer information, ensuring data integrity and security.
 
 ##Account Management: Enable creation, modification, and closure of bank accounts with proper validations.
@@ -13,7 +13,7 @@ Key Objectives
 
 
 
-Advantages
+# Advantages
 Data Management: Centralized storage of customer and account information.
 
 Accuracy: Automated calculations reduce human error in transactions.
@@ -26,7 +26,7 @@ Learning Tool: Provides hands-on practice with SQL, stored procedures, and relat
 
 
 
-Disadvantages
+# Disadvantages
 Limited Interface: Works mainly via MySQL CLI or Workbench; no GUI for end-users.
 
 Scalability: Not designed for large-scale banking operations.
@@ -37,7 +37,7 @@ Manual Maintenance: Requires manual script execution for some operations.
 
 
 
-Working Flow
+# Working Flow
 Customer Management: Add or update customer details.
 
 Account Creation: Link new accounts to customers with initial balance.
@@ -51,16 +51,16 @@ Balance Check: Validate account balance before withdrawal or transfer.
 Reporting: Generate statements or view transaction history.
 
 
--- Step 1: Create and use database
+# -- Step 1: Create and use database
 
 CREATE DATABASE bankingSystem; USE bankingSystem;
 
--- Step 2: Create Account Table
+# -- Step 2: Create Account Table
 
 mysql> create table accounts (accountnum int(20) primary key,cname varchar(30),
 gender enum ('male','female'),actype enum('withdraw','deposite'),currbal int(40));
 
--- Step 3: Insert Sample Data
+# -- Step 3: Insert Sample Data
 
 mysql> insert into accounts values (11110,'pooja','female','current',200000),
 (11111,'suresh','male','savings',50000),(11112,'ramesh','male','savings',80000),
@@ -72,12 +72,12 @@ mysql> insert into accounts values (11110,'pooja','female','current',200000),
 (11124,'zoro','male','current',20000),(11125,'luffy','male','current',40000);
 
 
--- Step 4: Create Transaction Table
+# -- Step 4: Create Transaction Table
 mysql> create table transactions(tid int(20) primary key,accountnum int(30),
 transactiontype enum('withdraw','deposite'),amount int(30),transactiondate date);
 
 
--- Step 5: Insert Sample Transactions
+# -- Step 5: Insert Sample Transactions
 
 mysql> insert into accounts values (11110,'pooja','female','current',200000),
 (11111,'suresh','male','savings',50000),(11112,'ramesh','male','savings',80000),
@@ -90,70 +90,67 @@ mysql> insert into accounts values (11110,'pooja','female','current',200000),
 
 
 
--- Step 6: Queries with Output
+# -- Step 6: Queries with Output
 
-1. Retrieve all customer names who have a balance greater than 50,000.
-mysql> select cname as custemer_name,currbal as balance from accounts where currbal>50000;
-
-
-2. Display account number, customer name, and account type of all customers having SAVINGS accounts.
-mysql> select accountnum as account_number,cname as costemer_name,actype as account_type from accounts where actype='savings';
+# 1. Retrieve all customer names who have a balance greater than 50,000.
+    mysql> select cname as custemer_name,currbal as balance from accounts where currbal>50000;
 
 
-3. List all transactions made in the current month.
-mysql> select * from transactions where month(transactiondate)=month(now());
+# 2. Display account number, customer name, and account type of all customers having SAVINGS accounts.
+    mysql> select accountnum as account_number,cname as costemer_name,actype as account_type from accounts where actype='savings';
 
 
-4. Show customers who have not made any transactions yet.
-mysql> select t1.cname from accounts as t1 inner join transactions as t2 on t1.accountnum=t2.accountnum where t2.tid is null;
+# 3. List all transactions made in the current month.
+    mysql> select * from transactions where month(transactiondate)=month(now());
 
 
-5. Display the top 3 customers with the highest account balance.
-mysql> select cname as costemer_name,currbal as current_balance  from accounts order by currbal desc limit 3;
+# 4. Show customers who have not made any transactions yet.
+    mysql> select t1.cname from accounts as t1 inner join transactions as t2 on t1.accountnum=t2.accountnum where t2.tid is null;
 
 
-6. Retrieve all transactions where the amount is greater than 10,000.
-mysql> select tid as trans_id,accountnum as acc_num,amount from transactions where amount>10000;
+# 5. Display the top 3 customers with the highest account balance.
+    mysql> select cname as costemer_name,currbal as current_balance  from accounts order by currbal desc limit 3;
 
 
-7. Show the total balance of all accounts combined.
-mysql> select sum(currbal) as costemers_totalbal from accounts;
+# 6. Retrieve all transactions where the amount is greater than 10,000.
+    mysql> select tid as trans_id,accountnum as acc_num,amount from transactions where amount>10000;
 
 
-8. List customers along with their total deposited amount.
-mysql> select t1.cname as costemer_name,t1.currbal+t2.amount from accounts as t1 join transactions
-as t2 on t1.accountnum=t2.accountnum where transactiontype='deposite';
+# 7. Show the total balance of all accounts combined.
+    mysql> select sum(currbal) as costemers_totalbal from accounts;
 
 
-9. Find customers who made a withdrawal of more than 5,000.
-mysql> select cname as costemer_name,transactiontype as type_of_transactions,amount from accounts 
-as t1 right join transactions as t2 on t1.accountnum=t2.accountnum where t2.transactiontype='withdraw' and t2.amount>5000;
+# 8. List customers along with their total deposited amount.
+    mysql> select t1.cname as costemer_name,t1.currbal+t2.amount from accounts as t1 join transactions as t2 on t1.accountnum=t2.accountnum where transactiontype='deposite';
 
 
-10. Display the most recent transaction date for each account.
-mysql> select accountnum,max(transactiondate) from transactions group by accountnum;
+# 9. Find customers who made a withdrawal of more than 5,000.
+    mysql> select cname as costemer_name,transactiontype as type_of_transactions,amount from accounts  as t1 right join transactions as t2 on t1.accountnum=t2.accountnum where t2.transactiontype='withdraw' and t2.amount>5000;
 
 
-11)Retrieve the number of transactions each customer has made.
-mysql> select a.cname as costemer_name,count(t.accountnum) as num_of_transaction from transactions t join
-accounts a on t.accountnum=a.accountnum group by a.cname;
+# 10. Display the most recent transaction date for each account.
+    mysql> select accountnum,max(transactiondate) from transactions group by accountnum;
 
 
-12)List customers who have both SAVINGS and CURRENT accounts (if allowed).
-mysql> select cname as costemer_name from accounts where actype='current' and actype='savings';
+# 11)Retrieve the number of transactions each customer has made.
+    mysql> select a.cname as costemer_name,count(t.accountnum) as num_of_transaction from transactions t join accounts a on t.accountnum=a.accountnum group by a.cname;
+
+
+# 12)List customers who have both SAVINGS and CURRENT accounts (if allowed).
+    mysql> select cname as costemer_name from accounts where actype='current' and actype='savings';
 
 
 
-13) Find all accounts created by customers whose name starts with 'P'.
-mysql> select cname as costemer_name,accountnum as account_number from accounts where cname like('p%');
+# 13) Find all accounts created by customers whose name starts with 'P'.
+    mysql> select cname as costemer_name,accountnum as account_number from accounts where cname like('p%');
 
 
-14) Retrieve customers sorted by their account balance in descending order
-mysql> select cname as costemer_name,currbal as current_balance from accounts order by currbal desc;
+# 14) Retrieve customers sorted by their account balance in descending order
+    mysql> select cname as costemer_name,currbal as current_balance from accounts order by currbal desc;
 
 
-15) Display the average account balance per account type
-mysql> select actype as account_type,avg(currbal)as avg_of_curbalance from accounts group by actype;
+# 15) Display the average account balance per account type
+    mysql> select actype as account_type,avg(currbal)as avg_of_curbalance from accounts group by actype;
 
 
 
